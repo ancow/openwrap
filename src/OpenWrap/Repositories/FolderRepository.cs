@@ -267,16 +267,8 @@ namespace OpenWrap.Repositories
             {
                 var anchoredDirectory = packagesDirectory.GetDirectory(anchorName);
 
-                try
-                {
-                    if (anchoredDirectory.Exists && anchoredDirectory.IsHardLink && !anchoredDirectory.SafeDelete())
-                        return false;
-                }
-                catch (IOException)
-                {
+                if (anchoredDirectory.Exists && anchoredDirectory.IsHardLink && !anchoredDirectory.SafeDelete())
                     return false;
-                }
-
                 anchoredDirectory = packagesDirectory.GetDirectory(anchorName);
                 if (anchoredDirectory.Exists)
                 {

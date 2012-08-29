@@ -279,7 +279,7 @@ namespace OpenWrap.Repositories
                 }
 
                 if (anchoredDirectory.Exists && isHardLink && !anchoredDirectory.SafeDelete())
-                        return false;
+                    return false;
                 anchoredDirectory = packagesDirectory.GetDirectory(anchorName);
                 if (anchoredDirectory.Exists)
                 {

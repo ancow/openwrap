@@ -266,9 +266,20 @@ namespace OpenWrap.Repositories
             public override bool? Anchor(IDirectory packagesDirectory, IDirectory packageDirectory, string anchorName)
             {
                 var anchoredDirectory = packagesDirectory.GetDirectory(anchorName);
+                bool isHardLink = true;
+                
+                try
+                {
+                    isHardLink = anchoredDirectory.IsHardLink;
+                }
+                catch (IOException)
+                {
+                    // This happens on drives where information about junction points is not available
+                    isHardLink = false;
+                }
 
-                if (anchoredDirectory.Exists && anchoredDirectory.IsHardLink && !anchoredDirectory.SafeDelete())
-                    return false;
+                if (anchoredDirectory.Exists && isHardLink && !anchoredDirectory.SafeDelete())
+                        return false;
                 anchoredDirectory = packagesDirectory.GetDirectory(anchorName);
                 if (anchoredDirectory.Exists)
                 {

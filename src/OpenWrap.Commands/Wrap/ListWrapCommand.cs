@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
+using OpenRasta.Client;
 using OpenWrap.Collections;
 using OpenWrap.Configuration;
 using OpenWrap.PackageManagement;
@@ -70,6 +73,11 @@ namespace OpenWrap.Commands.Wrap
                 foreach (var m in HintRemoteRepositories())
                     yield return m;
                 yield break;
+            }
+            if (IgnoreInvalidSSLCert)
+            {
+                ServicePointManager.ServerCertificateValidationCallback
+                    += new RemoteCertificateValidationCallback(SslCertificateValidators.ValidateAnyRemoteCertificate);
             }
             if (Project)
             {

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
+using OpenRasta.Client;
 using OpenWrap.Commands.Errors;
 using OpenWrap.Repositories;
 
@@ -23,6 +26,11 @@ namespace OpenWrap.Commands.Wrap
 
         protected override IEnumerable<ICommandOutput> ExecuteCore()
         {
+            if (IgnoreInvalidSSLCert)
+            {
+                ServicePointManager.ServerCertificateValidationCallback
+                    += new RemoteCertificateValidationCallback(SslCertificateValidators.ValidateAnyRemoteCertificate);
+            }
             // TODO: HACK HACK HACK
             IPackageRepository repo = Remotes.PublishRepositories(Remote).SelectMany(_=>_).FirstOrDefault();
             if (repo == null)

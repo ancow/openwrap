@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using OpenRasta.Client;
 using OpenWrap.Collections;
 using OpenWrap.Commands.Errors;
 using OpenWrap.Commands.Messages;
@@ -48,6 +50,11 @@ namespace OpenWrap.Commands.Remote
         protected override IEnumerable<ICommandOutput> ExecuteCore()
         {
             HandlePrioritySetting(_remotes, _targetRemote);
+            if (IgnoreInvalidSSLCert)
+            {
+                ServicePointManager.ServerCertificateValidationCallback
+                    += new RemoteCertificateValidationCallback(SslCertificateValidators.ValidateAnyRemoteCertificate);
+            }
 
             if (NewName != null)
                 _targetRemote.Name = NewName;

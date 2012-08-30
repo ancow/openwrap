@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using OpenRasta.Client;
 using OpenFileSystem.IO;
 using OpenWrap.Commands.Errors;
 using OpenWrap.Commands.Messages;
@@ -45,7 +47,12 @@ namespace OpenWrap.Commands.Wrap
         {
             yield return new Info(String.Format("Publishing package '{0}' to '{1}'", _packageFileName, Remote));
 
-            var credentialCookie =_credentials != null
+            if (IgnoreInvalidSSLCert)
+            {
+                ServicePointManager.ServerCertificateValidationCallback
+                    += new RemoteCertificateValidationCallback(SslCertificateValidators.ValidateAnyRemoteCertificate);
+            }
+            var credentialCookie = _credentials != null
                                       ? _authenticationSupport.WithCredentials(_credentials)
                                       : null;
             try

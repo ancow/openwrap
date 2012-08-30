@@ -32,6 +32,9 @@ namespace OpenWrap.Commands.Wrap
         public string From { get; set; }
 
         [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
+        [CommandInput]
         public string MaxVersion { get; set; }
 
         [CommandInput]

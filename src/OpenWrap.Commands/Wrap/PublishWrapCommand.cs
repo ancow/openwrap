@@ -24,6 +24,9 @@ namespace OpenWrap.Commands.Wrap
         NetworkCredential _credentials;
 
         [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
+        [CommandInput]
         public string Name { get; set; }
 
         [CommandInput(Position = 1)]

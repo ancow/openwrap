@@ -19,6 +19,9 @@ namespace OpenWrap.Commands.Wrap
         [CommandInput]
         public string From { get; set; }
 
+        [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
         [CommandInput(Position = 0)]
         public string Name { get; set; }
 

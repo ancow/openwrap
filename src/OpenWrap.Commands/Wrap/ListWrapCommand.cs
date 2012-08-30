@@ -14,6 +14,9 @@ namespace OpenWrap.Commands.Wrap
         string _remote;
         bool _remoteSet;
 
+        [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
         [CommandInput(Position = 0)]
         public string Query { get; set; }
 

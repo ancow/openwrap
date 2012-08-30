@@ -8,6 +8,9 @@ namespace OpenWrap.Commands.Wrap
     [Command(Noun = "wrap", Verb = "nuke", Description = "Removes a wrap from a remote repository index.")]
     public class NukeWrapCommand : WrapCommand
     {
+        [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
         [CommandInput(IsRequired = true, Position = 1)]
         public string Name { get; set; }
 

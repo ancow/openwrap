@@ -20,6 +20,9 @@ namespace OpenWrap.Commands.Remote
         [CommandInput(Position = 1)]
         public string Href { get; set; }
 
+        [CommandInput]
+        public bool IgnoreInvalidSSLCert { get; set; }
+
         [CommandInput(Position = 0, IsRequired = true)]
         public string Name { get; set; }
 
